@@ -1,14 +1,28 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { NxWelcomeComponent } from './nx-welcome.component';
+import { HdWalletMultiButtonComponent } from '@heavy-duty/wallet-adapter-material';
+import { ShyftApiService } from './ShyftApiService';
+import { WalletStore } from '@heavy-duty/wallet-adapter';
 
 @Component({
   standalone: true,
-  imports: [NxWelcomeComponent, RouterModule],
+  imports: [RouterModule, HdWalletMultiButtonComponent],
   selector: 'my-proyect-root',
-  templateUrl: './app.component.html',
-  styleUrl: './app.component.css',
+  template: `
+    <header class="py-8">
+      <h1 class="text-5xl text-center mb-4">Hola, soy Brenda</h1>
+
+    <div class="felx justify-center">
+      <hd-wallet-multi-button></hd-wallet-multi-button>
+    </div>
+    </header>
+    `
 })
+
 export class AppComponent {
-  title = 'my-proyect';
+  private readonly _shyftApiService = inject(ShyftApiService);
+  private readonly _walletStore = inject(WalletStore);
+  private readonly _publicKey = this._walletStore.publicKey$;
 }
+
+//``   <>
