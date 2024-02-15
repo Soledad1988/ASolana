@@ -16,9 +16,13 @@ import { ShyftApiService } from "./ShyftApiService";
           <h2 class="text-2xl font-bold mb-2">Historial Transacciones</h2>
           <p class="text-2xl font-bold">{{transactions()}}</p>
           <ul>
-            <li>Fecha: </li>
-            <li>Tipo: </li>
-            <li>Monto: </li>
+            <li *ngFor="let transaction of transactions().Transactions">
+              <ul>
+                <li>Fecha: {{ transaction.fecha }}</li>
+                <li>Tipo: {{ transaction.type }}</li>
+                <li>Monto: {{ transaction.amount }}</li>
+              </ul>
+            </li>
           </ul>
         </div>
       }
