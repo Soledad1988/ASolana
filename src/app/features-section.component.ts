@@ -7,9 +7,9 @@ import { Component } from "@angular/core";
     template: `
     <section class="bg-black text-white">
         <ul class="flex justify-center items-center gap-4 py-10">
-            <li>Rápido</li>
-            <li>Eficiente</li>
-            <li>Seguro</li>
+            <li>Fast</li>
+            <li>Efective</li>
+            <li>Save</li>
         </ul>
     </section>
     `

@@ -1,67 +1,66 @@
 import { DecimalPipe } from '@angular/common';
-import { Component, inject } from '@angular/core';
-import { toSignal } from '@angular/core/rxjs-interop';
+import { Component } from '@angular/core';
 import { MatAnchor } from '@angular/material/button';
 import { RouterModule } from '@angular/router';
-import { WalletStore } from '@heavy-duty/wallet-adapter';
 import { HdWalletMultiButtonComponent } from '@heavy-duty/wallet-adapter-material';
-import { computedAsync } from 'ngxtension/computed-async';
-import { ShyftApiService } from './ShyftApiService';
+import { FeaturesectionComponent } from "./features-section.component";
+import { HeroSectionComponent } from "./hero-section.component";
 
 @Component({
-  standalone: true,
-  imports: [
-    RouterModule, 
-    HdWalletMultiButtonComponent,
-    DecimalPipe,
-    MatAnchor
-  ],
-  selector: 'my-proyect-root',
-  template: `
-    <header class="px-16 pt-18 pb-8 relative bg-black text-white">
-    <h1 class="text-center text-5xl mb-4 py-5">My Bank</h1>
-    
-      @if(account()){
-        <div class="absolute top-16 left-1/4 flex flex-col items-center gap-2">
-          <h2 class="text-2xl font-bold mb-2">Balance</h2>
-          <img [src]="account()?.info?.image" class="w-16 h-16 mb-2">
-          <p class="text-2xl font-bold">{{account()?.balance | number }}</p>
+    standalone: true,
+    selector: 'my-proyect-root',
+    template: `
+    <div class="flex justify-center items-center h-screen">
+      <div class="w-full max-w-xs sm:max-w-sm rounded-lg overflow-hidden">
+        <header class="px-16 pt-18 pb-8 relative bg-black text-white">
+
+          <div class="flex justify-between items-center mb-4">
+          <div></div><!-- Espacio en blanco para alinear el icono de configuración -->
+             <h1 class="text-center text-5xl mb-4 py-5">Wallet</h1>
+             <a [routerLink]="['settings']" class="text-white">
+                  <i class="fas fa-cog text-lg"></i>
+              </a>
+          </div>
+        
+
+        <div class="flex justify-center mb-4 py-4">
+          <hd-wallet-multi-button></hd-wallet-multi-button>
+        </div>
+
+          <nav>
+          <ul class="flex justify-center gap-4">
+            <li>
+              <a [routerLink]="['']" class="inline-block px-4 py-2 bg-gray-300 hover:bg-gray-400 rounded-md text-white font-semibold" mat-button style="color: white;">Balance</a>
+            </li>
+            <li>
+              <a [routerLink]="['settings']"></a>
+            </li>
+            <li>
+              <a [routerLink]="['transactions']" class="inline-block px-4 py-2 bg-gray-300 hover:bg-gray-400 rounded-md text-white font-semibold" mat-button style="color: white;">transactions</a>
+            </li>
+          </ul>
+        </nav>
+        </header>
+        
+        <main>
+          <router-outlet></router-outlet>
+        </main>
+        <footer>
+        <my-proyect-features-section></my-proyect-features-section>
+        </footer>
       </div>
-      }
-
-      <nav>
-      <ul class="flex justify-center gap-4">
-        <li>
-          <a [routerLink]="['']" class="inline-block px-4 py-2 bg-gray-300 hover:bg-gray-400 rounded-md text-white font-semibold" mat-button style="color: white;">Home</a>
-        </li>
-        <li>
-          <a [routerLink]="['settings']" class="inline-block px-4 py-2 bg-gray-300 hover:bg-gray-400 rounded-md text-white font-semibold" mat-button style="color: white;">Settings</a>
-        </li>
-      </ul>
-    </nav>
-
-    <div class="flex justify-center mb-4 py-4">
-      <hd-wallet-multi-button></hd-wallet-multi-button>
     </div>
-
-    </header>
-    
-    <main>
-      <router-outlet></router-outlet>
-    </main>
-    `
+    `,
+    imports: [
+        RouterModule,
+        HdWalletMultiButtonComponent,
+        DecimalPipe,
+        MatAnchor,
+        HeroSectionComponent,
+        FeaturesectionComponent
+    ]
 })
 
-export class AppComponent {
-  private readonly _shyftApiService = inject(ShyftApiService);
-  private readonly _walletStore = inject(WalletStore);
-  private readonly _publicKey = toSignal(this._walletStore.publicKey$);
-
-  readonly account = computedAsync(
-    () => this._shyftApiService.getAccount(this._publicKey()?.toBase58()),
-    {requireSync: true},
-  );
-
-}
+export class AppComponent {}
 
 
