@@ -10,8 +10,8 @@ import { HeroSectionComponent } from "./hero-section.component";
     standalone: true,
     selector: 'my-proyect-root',
     template: `
-    <div class="flex justify-center items-center h-screen">
-      <div class="w-full max-w-xs sm:max-w-sm rounded-lg overflow-hidden">
+   <div class="flex justify-center items-center h-screen">
+      <div class="w-full max-w-2xl sm:max-w-3xl rounded-lg overflow-hidden">
         <header class="px-16 pt-18 pb-8 relative bg-black text-white">
 
           <div class="flex justify-between items-center mb-4">
@@ -45,8 +45,9 @@ import { HeroSectionComponent } from "./hero-section.component";
         <main>
           <router-outlet></router-outlet>
         </main>
+
         <footer>
-        <my-proyect-features-section></my-proyect-features-section>
+          <my-proyect-features-section></my-proyect-features-section>
         </footer>
       </div>
     </div>
@@ -57,7 +58,7 @@ import { HeroSectionComponent } from "./hero-section.component";
         DecimalPipe,
         MatAnchor,
         HeroSectionComponent,
-        FeaturesectionComponent
+        FeaturesectionComponent,
     ]
 })
 

@@ -10,25 +10,34 @@ import { ShyftApiService } from "./ShyftApiService";
     standalone: true,
     template: `
     <section class="bg-gray-300 px-4 py-32 text-center">
-
-      @if(transactions()){
         <div class="absolute top-1/8 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex flex-col items-center gap-2">
-          <h2 class="text-2xl font-bold mb-2">Historial Transacciones</h2>
-          <p class="text-2xl font-bold">{{transactions()}}</p>
-          <ul>
-            <li *ngFor="let transaction of transactions().Transactions">
-              <ul>
-                <li>Fecha: {{ transaction.fecha }}</li>
-                <li>Tipo: {{ transaction.type }}</li>
-                <li>Monto: {{ transaction.amount }}</li>
-              </ul>
-            </li>
-          </ul>
+            <div>
+            @for(trans of transacciones() ?? []; track $index){
+            <h2 class="text-2xl font-bold mb-2">Historial Transacciones</h2>
+            <table class="table-auto">
+              <thead>
+                <tr>
+                  <th class="px-4 py-2">TimesTamp</th>
+                  <th class="px-4 py-2">Fee</th>
+                  <th class="px-4 py-2 text-sm">Fee Payer</th>
+                </tr>
+              </thead>
+              <tbody>
+                  <tr>
+                    <td class="px-4 py-2">{{ trans.timestamp }}</td>
+                    <td class="px-4 py-2">{{ trans.fee }}</td>
+                    <td class="px-4 py-2 text-sm">{{ trans.fee_payer }}</td>
+                  </tr>
+              </tbody>
+            </table>
+            } @empty {
+              
+            }
+            </div>       
         </div>
-      }
     </section>
 
-    `
+    `,
   })
 
   export class TransactionssectionComponent {
@@ -36,8 +45,10 @@ import { ShyftApiService } from "./ShyftApiService";
     private readonly _walletStore = inject(WalletStore);
     private readonly _publicKey = toSignal(this._walletStore.publicKey$);
   
-    readonly transactions = computedAsync(
+    readonly transacciones = computedAsync(
       () => this._shyftApiService.getTransactions(this._publicKey()?.toBase58()),
       {requireSync: false},
     );
-  }
+
+}
+    
