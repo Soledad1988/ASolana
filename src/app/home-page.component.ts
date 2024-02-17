@@ -1,6 +1,7 @@
 import { Component } from "@angular/core";
 import { FeaturesectionComponent } from "./features-section.component";
 import { HeroSectionComponent } from "./hero-section.component";
+import { TransactionssectionComponent } from "./transactions-section.component";
 
 
 @Component({
@@ -8,12 +9,12 @@ import { HeroSectionComponent } from "./hero-section.component";
     standalone: true,
     template: `
     <my-proyect-hero-section></my-proyect-hero-section>
-    <my-proyect-features-section></my-proyect-features-section>
     `,
-    imports:[
-        HeroSectionComponent, FeaturesectionComponent
+    imports: [
+        HeroSectionComponent, FeaturesectionComponent,
+        TransactionssectionComponent
     ]
-  })
+})
 
   export class HomePageComponent {
   

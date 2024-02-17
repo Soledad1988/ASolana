@@ -12,6 +12,12 @@ export const appRoutes: Route[] = [
     import ('./settings-page.component').then((m) => m.SettingsPageComponent),
 },
 {
+    path: 'transactions',
+    loadComponent: ()  =>
+    import ('./transactions-section.component').then((m) => m.TransactionssectionComponent),
+},
+
+{
     path: '**',
     redirectTo:' '
 }
