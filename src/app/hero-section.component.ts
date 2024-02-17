@@ -5,7 +5,7 @@ import { MatAnchor } from "@angular/material/button";
 import { RouterModule } from "@angular/router";
 import { WalletStore } from "@heavy-duty/wallet-adapter";
 import { computedAsync } from "ngxtension/computed-async";
-import { ShyftApiService } from "./ShyftApiService";
+import { ShyftApiService } from "./shyft-api-service";
 
 
 @Component({
