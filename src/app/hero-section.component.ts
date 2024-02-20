@@ -2,10 +2,12 @@ import { DecimalPipe } from "@angular/common";
 import { Component, inject } from "@angular/core";
 import { toSignal } from "@angular/core/rxjs-interop";
 import { MatAnchor } from "@angular/material/button";
+import { MatDialog } from "@angular/material/dialog";
 import { RouterModule } from "@angular/router";
 import { WalletStore } from "@heavy-duty/wallet-adapter";
 import { computedAsync } from "ngxtension/computed-async";
 import { ShyftApiService } from "./shyft-api-service";
+import { TransferModalComponent } from "./transfer.modal.component";
 
 
 @Component({
@@ -29,6 +31,11 @@ import { ShyftApiService } from "./shyft-api-service";
           </div>
        </div>
       }
+
+      <div class="">
+        <button (click)="onTransfer()">Transferir</button>
+      </div>
+     
         
     </section>
     `
@@ -39,9 +46,15 @@ import { ShyftApiService } from "./shyft-api-service";
     private readonly _shyftApiService = inject(ShyftApiService);
     private readonly _walletStore = inject(WalletStore);
     private readonly _publicKey = toSignal(this._walletStore.publicKey$);
-  
+    private readonly _matDialog = inject(MatDialog);
+
     readonly account = computedAsync(
       () => this._shyftApiService.getAccount(this._publicKey()?.toBase58()),
       {requireSync: false},
     );
+
+    onTransfer(){
+      console.log('Hola mundo')
+      this._matDialog.open(TransferModalComponent);
+    }
   }
