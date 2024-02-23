@@ -22,48 +22,48 @@ import { TransferModalComponent } from "./transfer.modal.component";
         MatCardModule
     ],
     template: `
- <section class="bg-gray-300 px-4 py-32 text-center relative">
-  <div class="flex flex-col items-center">
-  
-   @if (account()) {    
-        <div class="absolute top-1/6 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-        <h2 class="text-2xl font-bold mb-4">Balance</h2>
-          <div class="flex flex-col items-center gap-4">
-            <table class="table-auto border-collapse border border-gray-800 w-full">
-              <thead>
-                <tr class="bg-gray-400">
-                  <th class="px-4 py-2">Moneda</th>
-                  <th class="px-4 py-2">Balance</th>
-                </tr>
-              </thead>
-              <tbody>
-                @for (item of account(); track $index) {
-                  <tr class="bg-gray-200">
-                    <td class="px-4 py-2">
-                      <div class="flex items-center">
-                       <div class="w-10 h-10 rounded-full bg-gray-400 flex items-center justify-center mr-2">
-                          <img class="w-8 h-8 rounded-full" src="{{ item.info.image }}" alt="{{ item.info.name }}">
-                        </div>
-                        <span>{{ item.info.name }} ({{ item.info.symbol }})</span>
-                      </div>
-                    </td>
-                    <td class="px-4 py-2">{{ item.balance }}</td>
-                  </tr>
-                }
-              </tbody>
-            </table>
-            
-          </div>
-        </div>
 
+<section class="bg-gray-300 px-4 py-32 text-center">
+    <div class="container mx-auto max-w-lg">
+        <div class="absolute top-1/6 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+            @if (account()) {
+                <div class="flex flex-col items-center gap-2">
+                    <h2 class="text-xl font-bold mb-2">Balance</h2>
+                    <div class="overflow-auto max-h-60">
+                        <ul class="divide-y divide-gray-400">
+                        @for (item of account()  ?? []; track $index) {
+                          <li class="py-2 flex items-center">
+                                    <div class="flex items-center justify-center w-10 h-10 bg-gray-400 rounded-full mr-2">
+                                        <img class="w-6 h-6 rounded-full" src="{{ item.info.image }}" alt="{{ item.info.name }}">
+                                    </div>
+                                    <div>
+                                        <span class="text-sm font-semibold">{{ item.info.name }}</span>
+                                        <div class="flex items-center text-xs">
+                                            <span class="mr-1">{{ item.info.symbol }}</span>
+                                            <span>{{ item.balance }}</span>
+                                        </div>
+                                    </div>
+                                </li>
+                          }
+                      </ul>
+                </div>
+                <footer class="mt-2">
+                        <button class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600" (click)="onTransfer()">Transferir Fondos</button>
+                </footer>
+            </div>
+        }
+    </div>
+    </div>
+</section>
+
+
+<!--
         <footer class="absolute bottom-3 left-1/2 transform -translate-x-1/2 w-full">
           <div class="flex justify-center">
             <button mat-raised-button color="primary" (click)="onTransfer()">Transferir Fondos</button>
           </div>
         </footer>
-      }
-      </div>
-  </section>
+    -->
 
     `
   })

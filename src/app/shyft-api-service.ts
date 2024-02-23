@@ -37,6 +37,7 @@ export class ShyftApiService{
         .pipe(map((response)=> response.result));
     }
 
+    
     getAllToken(publicKey: string | undefined | null,) {
         if (!publicKey) {
             return of(null);
@@ -48,12 +49,13 @@ export class ShyftApiService{
         url.searchParams.set('wallet', publicKey);
         
         return this._httpClient.get<{
-            result: [{balance: number; info: {image: string, name:string, symbol:string}
-        }];
+            result: {balance: number; info: {image: string, name:string, symbol:string}
+        }[];
         }>(url.toString(), {headers: this._header}).
         pipe(map((response) => response.result)); 
 
     }
+
 
     getTransactions(publicKey: string | undefined | null) {
         if (!publicKey) {

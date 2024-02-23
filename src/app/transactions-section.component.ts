@@ -29,7 +29,6 @@ import { ShyftApiService } from "./shyft-api-service";
                     </tr>
                 </thead>
                 <tbody>
-                  
                     @for (trans of transacciones() ?? []; track $index) {
                       <tr class="bg-white">
                         <td class="px-4 py-2">{{ trans.timestamp }}</td>
