@@ -13,6 +13,6 @@ export const appConfig: ApplicationConfig = {
     provideWalletAdapter(),
     provideHttpClient(), 
     provideAnimationsAsync(),
-    importProvidersFrom(MatDialogModule)
+    importProvidersFrom([MatDialogModule])
   ],
 };
