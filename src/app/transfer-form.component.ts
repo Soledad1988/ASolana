@@ -26,9 +26,9 @@ export interface TransferFormPayLoad{
     template: `
 
     <div>
-      <form #form="ngForm" (ngSubmit)="onSubmitForm(form)" class="w-2/4 mx-auto bg-black rounded-lg p-6">
+      <form #form="ngForm" (ngSubmit)="onSubmitForm(form)" class="w-2/4 mx-auto bg-gray-200 rounded-lg p-6 border border-gray-300">
   
-        <mat-form-field class="w-full mb-4">
+        <mat-form-field appearance="fill" class="w-full mb-4">
             <mat-label>Moneda</mat-label>
             <mat-select [(ngModel)]="model.mintAddress" name="mintAddress" required #mintAddresControl="ngModel">
               @for (token of tokens(); track token) {
@@ -56,7 +56,7 @@ export interface TransferFormPayLoad{
             <mat-label>Concepto</mat-label>
             <input name="memo" matInput type="text" placeholder="Ejemplo"
               [(ngModel)]="model.memo" required #memoControl="ngModel">
-            <mat-icon matSuffix>description</mat-icon>
+            <mat-icon matSuffix class="text-gray-600">description</mat-icon>
 
             @if(form.submitted && memoControl.errors){
                 <mat-error>
@@ -74,7 +74,7 @@ export interface TransferFormPayLoad{
             <mat-label>Monto</mat-label>
             <input name="amount" matInput type="number" min="0" placeholder="Ingrese el monto aquí."
               [(ngModel)]="model.amount" required #amountControl="ngModel">
-            <mat-icon matSuffix>attach_money</mat-icon>
+            <mat-icon matSuffix class="text-gray-600">attach_money</mat-icon>
 
             @if(form.submitted && amountControl.errors){
                 <mat-error>
@@ -94,7 +94,7 @@ export interface TransferFormPayLoad{
             <mat-label>Destinatario</mat-label>
             <input name="receiverAddress" matInput type="text" placeholder="Public Key de la wallet del destinatario."
               [(ngModel)]="model.receiverAddress" required #receiverAddressControl="ngModel">
-            <mat-icon matSuffix>key</mat-icon>
+            <mat-icon matSuffix class="text-gray-600">key</mat-icon>
 
             @if(form.submitted && receiverAddressControl.errors){
                 <mat-error>
@@ -107,8 +107,8 @@ export interface TransferFormPayLoad{
             }
         </mat-form-field>
 
-      <footer class="flex justify-center">
-        <button type="submit" mat-raised-button color="primary">Enviar</button>
+      <footer class="flex justify-center font-mono">
+        <button type="submit" mat-raised-button color="myGray">Enviar</button>
       </footer>
     </form>
   </div>
