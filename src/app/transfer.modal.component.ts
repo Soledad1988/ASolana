@@ -11,15 +11,20 @@ import { TransferFormComponent, TransferFormPayLoad } from "./transfer-form.comp
 @Component({
     selector: 'my-proyect-transfer-section',
     standalone: true,
+    imports: [TransferModalComponent, TransferFormComponent],
     template: `
-    <div class="px-8 pt-16 pb8-">
+    <div class="px-8 pt-20 pb-8" style="background-color: rgba(0, 0, 0, 0.3);">
       <h2 class="text-3xl text-center mb-8">Transferir Fondos</h2>
 
-      <my-proyect-transfer-form (submitForm)="onTransfer($event)"></my-proyect-transfer-form> <!--$event-->
+      <my-proyect-transfer-form 
+      (submitForm)="onTransfer($event)"
+      [tokens] = "allTokens() ?? []"
+      
+      ></my-proyect-transfer-form>
     </div>
     `,
     
-    imports: [TransferModalComponent, TransferFormComponent]
+  
 })
 
   export class TransferModalComponent {
@@ -27,7 +32,9 @@ import { TransferFormComponent, TransferFormPayLoad } from "./transfer-form.comp
     private readonly _shyftApiService = inject(ShyftApiService);
     private readonly _publicKey = injectPublicKey();
 
-    readonly allTokens = computedAsync( () => this._shyftApiService.getAllToken(this._publicKey()?.toBase58()))
+    readonly allTokens = computedAsync( () => 
+    this._shyftApiService.getAllToken(this._publicKey()?.toBase58()),
+    );
 
 
     onTransfer(payload: TransferFormPayLoad){
