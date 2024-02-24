@@ -50,15 +50,6 @@ import { TransferModalComponent } from "./transfer.modal.component";
     </div>
 </section>
 
-
-<!--
-        <footer class="absolute bottom-3 left-1/2 transform -translate-x-1/2 w-full">
-          <div class="flex justify-center">
-            <button mat-raised-button color="primary" (click)="onTransfer()">Transferir Fondos</button>
-          </div>
-        </footer>
-    -->
-
     `
   })
 
