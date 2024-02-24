@@ -1,7 +1,10 @@
-import { Component } from "@angular/core";
+import { Component, inject } from "@angular/core";
 import { createTransferInstructions } from "@heavy-duty/spl-utils";
-import { injectTransactionSender } from "@heavy-duty/wallet-adapter";
+import { injectPublicKey, injectTransactionSender } from "@heavy-duty/wallet-adapter";
+import { computedAsync } from "ngxtension/computed-async";
+import { ShyftApiService } from "./shyft-api-service";
 import { TransferFormComponent, TransferFormPayLoad } from "./transfer-form.component";
+
 
 
 @Component({
@@ -19,8 +22,13 @@ import { TransferFormComponent, TransferFormPayLoad } from "./transfer-form.comp
 
   export class TransferModalComponent {
     private readonly _transactionSender = injectTransactionSender();
+    private readonly _shyftApiService = inject(ShyftApiService);
+    private readonly _publicKey = injectPublicKey();
+
+    readonly allTokens = computedAsync( () => this._shyftApiService.getAllToken(this._publicKey()?.toBase58()))
+
+
     onTransfer(payload: TransferFormPayLoad){
-  
       this._transactionSender.send(({publicKey})=> 
         createTransferInstructions({
           amount: payload.amount,
