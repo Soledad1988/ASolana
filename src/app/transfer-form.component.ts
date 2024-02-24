@@ -5,6 +5,7 @@ import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatIcon } from "@angular/material/icon";
 import { MatInput } from "@angular/material/input";
 import { MatOption, MatSelect } from '@angular/material/select';
+import Swal from 'sweetalert2';
 
 export interface TransferFormModel{
   memo: string | null;
@@ -133,6 +134,13 @@ export interface TransferFormPayLoad{
     onSubmitForm(form: NgForm){
       if(form.invalid || this.model.amount === null || this.model.memo=== null || this.model.receiverAddress === null || this.model.mintAddress === null){
         console.error('El formulario es invalido');
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: 'El formulario es inválido',
+          timer: 4000, // 4 segundos
+          timerProgressBar: true
+        });
       }else{
         this.submitForm.emit({
           amount:this.model.amount,
