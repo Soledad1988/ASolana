@@ -11,7 +11,12 @@ export interface TransferFormModel{
   memo: string | null;
   amount: number  | null;
   receiverAddress:string | null;
-  mintAddress: string | null;
+ // mintAddress: string | null;
+  token:{
+    address:string,
+    balance:number,
+    info:{name:string, symbol:string,image:string};
+  } | null;
 }
 
 export interface TransferFormPayLoad{
@@ -31,9 +36,9 @@ export interface TransferFormPayLoad{
   
         <mat-form-field appearance="fill" class="w-full mb-4">
             <mat-label>Moneda</mat-label>
-            <mat-select [(ngModel)]="model.mintAddress" name="mintAddress" required #mintAddresControl="ngModel">
+            <mat-select [(ngModel)]="model.token" name="token" required #tokenControl="ngModel">
               @for (token of tokens(); track token) {
-                <mat-option [value]="token.address">
+                <mat-option [value]="token">
                 <div class="flex item-center gap-2">
                   <img [src]="token.info.image" class="rounded-full w-8 h-8">
                   <span>{{token.info.symbol}}</span>
@@ -42,9 +47,9 @@ export interface TransferFormPayLoad{
               }
             </mat-select>
 
-            @if(form.submitted && mintAddresControl.errors){
+            @if(form.submitted && tokenControl.errors){
                 <mat-error>
-                @if(mintAddresControl.errors['required']) {
+                @if(tokenControl.errors['required']) {
                   La moneda es obligatoria. 
                 }
                 </mat-error> 
@@ -74,7 +79,7 @@ export interface TransferFormPayLoad{
         <mat-form-field appearance="fill" class="w-full mb-4">
             <mat-label>Monto</mat-label>
             <input name="amount" matInput type="number" min="0" placeholder="Ingrese el monto aquí."
-              [(ngModel)]="model.amount" required #amountControl="ngModel">
+              [(ngModel)]="model.amount" required #amountControl="ngModel" [max]="tokenControl.value?.balance ?? undefined">
             <mat-icon matSuffix class="text-gray-600">attach_money</mat-icon>
 
             @if(form.submitted && amountControl.errors){
@@ -83,10 +88,12 @@ export interface TransferFormPayLoad{
                   El monto es obligatorio.
                   } @else if (amountControl.errors['min']) {
                     El monto debe ser mayor a cero.
+                  } @else if (amountControl.errors['max']) {
+                    El monto debe ser menor a {{tokenControl.value.balance }}.
                   }
                 </mat-error>
             }@else{
-                <mat-hint>Debe ser el motivo de la transferencia</mat-hint>
+                <mat-hint>Ingrese el monto a enviar.</mat-hint>
             }
         </mat-form-field>
 
@@ -122,7 +129,7 @@ export interface TransferFormPayLoad{
       amount:null,
       memo:null,
       receiverAddress:null,
-      mintAddress:null
+      token:null
     }
 
     readonly tokens = input<
@@ -132,7 +139,7 @@ export interface TransferFormPayLoad{
     @Output() readonly submitForm = new   EventEmitter<TransferFormPayLoad>()
 
     onSubmitForm(form: NgForm){
-      if(form.invalid || this.model.amount === null || this.model.memo=== null || this.model.receiverAddress === null || this.model.mintAddress === null){
+      if(form.invalid || this.model.amount === null || this.model.memo=== null || this.model.receiverAddress === null || this.model.token === null){
         console.error('El formulario es invalido');
         Swal.fire({
           icon: 'error',
@@ -146,7 +153,7 @@ export interface TransferFormPayLoad{
           amount:this.model.amount,
           memo:this.model.memo,
           receiverAddress:this.model.receiverAddress,
-          mintAddress:this.model.mintAddress
+          mintAddress: this.model.token.address
         })
       }
     }
