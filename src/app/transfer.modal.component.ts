@@ -13,13 +13,12 @@ import { TransferFormComponent, TransferFormPayLoad } from "./transfer-form.comp
     standalone: true,
     imports: [TransferModalComponent, TransferFormComponent],
     template: `
-    <div class="px-8 pt-20 pb-8" style="background-color: rgba(0, 0, 0, 0.3);">
-      <h2 class="text-3xl text-center mb-8">Transferir Fondos</h2>
+    <div class="px-8 pt-20 pb-8" style="background-color:black">
+      <h2 class="text-3xl text-center font-mono text-myGray mb-8">Transferir Fondos</h2>
 
       <my-proyect-transfer-form 
       (submitForm)="onTransfer($event)"
       [tokens] = "allTokens() ?? []"
-      
       ></my-proyect-transfer-form>
     </div>
     `,
@@ -36,7 +35,7 @@ import { TransferFormComponent, TransferFormPayLoad } from "./transfer-form.comp
     this._shyftApiService.getAllToken(this._publicKey()?.toBase58()),
     );
 
-
+    
     onTransfer(payload: TransferFormPayLoad){
 
       Swal.mixin({
@@ -59,21 +58,23 @@ import { TransferFormComponent, TransferFormPayLoad } from "./transfer-form.comp
           fundReceiver: true,
           memo: payload.memo
         }),
-
       ).subscribe({
         next: (signature) => {
-            Swal.close(); // Cierra la alerta de carga
+            Swal.close();
             Swal.fire('Transacción completada con éxito', '', 'success');
             console.log(`Firma: ${signature}`);
         },
+
+        
         error: (error) => {
-            Swal.close(); // Cierra la alerta de carga
+            Swal.close();
             Swal.fire('Error', 'Hubo un problema al completar la transacción', 'error');
             console.error(error);
         },
         complete: () => console.log('Transacción lista.')
     })
-    }
 
   }
+
+}
 
