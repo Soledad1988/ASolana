@@ -2,6 +2,7 @@ import { Component, inject } from "@angular/core";
 import { createTransferInstructions } from "@heavy-duty/spl-utils";
 import { injectPublicKey, injectTransactionSender } from "@heavy-duty/wallet-adapter";
 import { computedAsync } from "ngxtension/computed-async";
+import Swal from 'sweetalert2';
 import { ShyftApiService } from "./shyft-api-service";
 import { TransferFormComponent, TransferFormPayLoad } from "./transfer-form.component";
 
@@ -17,6 +18,7 @@ import { TransferFormComponent, TransferFormPayLoad } from "./transfer-form.comp
       <my-proyect-transfer-form (submitForm)="onTransfer($event)"></my-proyect-transfer-form> <!--$event-->
     </div>
     `,
+    
     imports: [TransferModalComponent, TransferFormComponent]
 })
 
@@ -29,6 +31,18 @@ import { TransferFormComponent, TransferFormPayLoad } from "./transfer-form.comp
 
 
     onTransfer(payload: TransferFormPayLoad){
+
+      Swal.mixin({
+        title: 'Transacción en progreso',
+        text: 'Por favor, espere mientras se completa la transacción...',
+        allowOutsideClick: false,
+        allowEscapeKey: false,
+        showConfirmButton: false,
+        didOpen: () => {
+          Swal.showLoading();
+        }
+      }).fire();
+
       this._transactionSender.send(({publicKey})=> 
         createTransferInstructions({
           amount: payload.amount,
@@ -40,12 +54,19 @@ import { TransferFormComponent, TransferFormPayLoad } from "./transfer-form.comp
         }),
 
       ).subscribe({
-        next:(signature)=>console.log(`Firma: ${signature}`),
-        error: (error) => console.error(error),
-        complete: () => console.log('Transaccion lista.')
-      })
+        next: (signature) => {
+            Swal.close(); // Cierra la alerta de carga
+            Swal.fire('Transacción completada con éxito', '', 'success');
+            console.log(`Firma: ${signature}`);
+        },
+        error: (error) => {
+            Swal.close(); // Cierra la alerta de carga
+            Swal.fire('Error', 'Hubo un problema al completar la transacción', 'error');
+            console.error(error);
+        },
+        complete: () => console.log('Transacción lista.')
+    })
     }
 
   }
-
 
