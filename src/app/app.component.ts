@@ -62,6 +62,7 @@ import { HeroSectionComponent } from "./hero-section.component";
     ]
 })
 
-export class AppComponent {}
+export class AppComponent {
+}
 
 
