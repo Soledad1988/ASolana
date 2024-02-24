@@ -31,7 +31,7 @@ import { TransferFormComponent, TransferFormPayLoad } from "./transfer-form.comp
     onTransfer(payload: TransferFormPayLoad){
       this._transactionSender.send(({publicKey})=> 
         createTransferInstructions({
-          amount: payload.amount,
+          amount: payload.amount*10**9,
           mintAddress: '7EYnhQoR9YM3N7UoaKRoA44Uy8JeaZV3qyouov87awMs',
           receiverAddress: payload.receiverAddress,
           senderAddress: publicKey.toBase58(),
