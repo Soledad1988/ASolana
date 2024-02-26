@@ -19,9 +19,9 @@ import { ShyftApiService } from "./shyft-api-service";
         <div class="absolute top-1/8 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex flex-col items-center gap-2">
         
         <div class="mat-elevation-z8" style="max-height: 200px; overflow-y: auto;">
-            <h2 class="text-2xl font-bold mb-2">Historial Transacciones</h2>
+            <h2 class="text-2xl font-bold mb-2 font-mono text-myGray">Historial Transacciones</h2>
             <table class="table-auto">
-                <thead>
+                <thead class="font-mono text-myGray">
                     <tr>
                         <th class="px-4 py-2">TimesTamp</th>
                         <th class="px-4 py-2">Fee</th>

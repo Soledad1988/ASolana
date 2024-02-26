@@ -16,9 +16,9 @@ import { HeroSectionComponent } from "./hero-section.component";
 
           <div class="flex justify-between items-center mb-4">
           <div></div><!-- Espacio en blanco para alinear el icono de configuración -->
-             <h1 class="text-center text-5xl mb-4 py-5">Wallet</h1>
+             <h1 class="text-center text-5xl mb-4 py-5 text-myGray font-mono">Wallet</h1>
              <a [routerLink]="['settings']" class="text-white">
-                  <i class="fas fa-cog text-lg"></i>
+                  <i class="fas fa-cog text-lg text-myGray"></i>
               </a>
           </div>
         
@@ -30,13 +30,13 @@ import { HeroSectionComponent } from "./hero-section.component";
           <nav>
           <ul class="flex justify-center gap-4">
             <li>
-              <a [routerLink]="['']" class="inline-block px-4 py-2 bg-gray-300 hover:bg-gray-400 rounded-md text-white font-semibold" mat-button style="color: white;">Balance</a>
+              <a [routerLink]="['']" class="inline-block px-4 py-2 bg-gray-300 hover:bg-myGray rounded-md text-black font-mono" mat-button style="color: white;">Balance</a>
             </li>
             <li>
               <a [routerLink]="['settings']"></a>
             </li>
             <li>
-              <a [routerLink]="['transactions']" class="inline-block px-4 py-2 bg-gray-300 hover:bg-gray-400 rounded-md text-white font-semibold" mat-button style="color: white;">transactions</a>
+              <a [routerLink]="['transactions']" class="inline-block px-4 py-2 bg-gray-300 hover:bg-myGray  rounded-md text-white font-mono" mat-button style="color: white;">transactions</a>
             </li>
           </ul>
         </nav>

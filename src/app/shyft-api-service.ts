@@ -49,7 +49,9 @@ export class ShyftApiService{
         url.searchParams.set('wallet', publicKey);
         
         return this._httpClient.get<{
-            result: {balance: number; info: {image: string, name:string, symbol:string}
+            result: {address:string, 
+                    balance: number; 
+                    info: {image: string, name:string, symbol:string}
         }[];
         }>(url.toString(), {headers: this._header}).
         pipe(map((response) => response.result)); 

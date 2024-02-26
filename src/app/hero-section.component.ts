@@ -27,43 +27,28 @@ import { TransferModalComponent } from "./transfer.modal.component";
     <div class="container mx-auto max-w-lg">
         <div class="absolute top-1/6 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
             @if (account()) {
-                <div class="flex flex-col items-center gap-2">
-                    <h2 class="text-xl font-bold mb-2">Balance</h2>
-                    <div class="overflow-auto max-h-60">
-                        <ul class="divide-y divide-gray-400">
-                        @for (item of account()  ?? []; track $index) {
-                          <li class="py-2 flex items-center">
-                                    <div class="flex items-center justify-center w-10 h-10 bg-gray-400 rounded-full mr-2">
-                                        <img class="w-6 h-6 rounded-full" src="{{ item.info.image }}" alt="{{ item.info.name }}">
-                                    </div>
-                                    <div>
-                                        <span class="text-sm font-semibold">{{ item.info.name }}</span>
-                                        <div class="flex items-center text-xs">
-                                            <span class="mr-1">{{ item.info.symbol }}</span>
-                                            <span>{{ item.balance }}</span>
-                                        </div>
-                                    </div>
-                                </li>
-                          }
-                      </ul>
-                </div>
+                <div class="flex flex-col items-center gap-3">
+                    <h2 class="text-xl font-bold mb-2 bg-mygray text-myGray font-mono">Balance</h2>
+                    <table class="py-2 flex items-center">
+                      <tbody>
+                        @for (item of account() ?? []; track $index) {
+                          <tr class="bg-gray gap-2">
+                            <td class="mr-4 gap-4"><img class="w-8 h-8 rounded-full" src="{{ item.info.image }}" alt="{{ item.info.name }}"></td>
+                            <td class="mr-4 gap-4">{{ item.info.symbol }}</td>
+                            <td class="mr-4">{{ item.balance }}</td>
+                          </tr>
+                        }
+                      </tbody>
+                    </table>
+
                 <footer class="mt-2">
-                        <button class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600" (click)="onTransfer()">Transferir Fondos</button>
+                    <button class="px-4 py-2 bg-myGray text-white font-mono rounded hover:bg-gray-300" (click)="onTransfer()">Transferir Fondos</button>
                 </footer>
             </div>
         }
     </div>
     </div>
 </section>
-
-
-<!--
-        <footer class="absolute bottom-3 left-1/2 transform -translate-x-1/2 w-full">
-          <div class="flex justify-center">
-            <button mat-raised-button color="primary" (click)="onTransfer()">Transferir Fondos</button>
-          </div>
-        </footer>
-    -->
 
     `
   })
@@ -78,13 +63,6 @@ import { TransferModalComponent } from "./transfer.modal.component";
     readonly account = computedAsync(
       () => this._shyftApiService.getAllToken(this._publicKey()?.toBase58()),
       {requireSync: false},
-
-    );
-
-    readonly account2 = computedAsync(
-      () => this._shyftApiService.getAccount(this._publicKey()?.toBase58()),
-      {requireSync: false},
-
     );
 
     ngOnInit(){
