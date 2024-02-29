@@ -23,14 +23,14 @@ export class ShyftApiService{
             return of(null);
         }
 
-        const url = new URL('https://api.shyft.to/sol/v1/wallet/token_balance');
+        const url = new URL('https://api.shyft.to/sol/v1/wallet/balance');
 
         url.searchParams.set('network', 'mainnet-beta');
         url.searchParams.set('wallet', publicKey);
-        url.searchParams.set('token', this._mint);
+       // url.searchParams.set('token', this._mint);
 
         return this._httpClient.get<{ 
-            result: { balance: number; info:{ image: String}};
+            result: { balance: number;  info: {image: string, name:string, symbol:string}};
         }>(url.toString(),
         { headers: this._header}
         )
