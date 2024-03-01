@@ -12,6 +12,7 @@
 🔔 Angular Nx.
 🔔 Angular Material.
 🔔 TypeScript.
+🔔 Tailwind CSS.
 
 
 ## Autor
