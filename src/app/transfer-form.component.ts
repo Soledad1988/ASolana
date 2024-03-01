@@ -35,7 +35,7 @@ export interface TransferFormPayLoad{
       <form #form="ngForm" (ngSubmit)="onSubmitForm(form)" class="w-2/4 mx-auto bg-gray-200 rounded-lg p-6 border border-gray-300">
   
         <mat-form-field appearance="fill" class="w-full mb-4">
-            <mat-label>Moneda</mat-label>
+            <mat-label>Coin</mat-label>
             <mat-select [(ngModel)]="model.token" name="token" required #tokenControl="ngModel">
               @for (token of tokens(); track token) {
                 <mat-option [value]="token">
@@ -50,16 +50,16 @@ export interface TransferFormPayLoad{
             @if(form.submitted && tokenControl.errors){
                 <mat-error>
                 @if(tokenControl.errors['required']) {
-                  La moneda es obligatoria. 
+                  Coin is mandatory. 
                 }
                 </mat-error> 
             }@else{
-                <mat-hint>La moneda que deseas transferir.</mat-hint>
+                <mat-hint>The coin you want to transfer.</mat-hint>
             }
         </mat-form-field>
 
         <mat-form-field appearance="fill" class="w-full mb-4">
-            <mat-label>Concepto</mat-label>
+            <mat-label>Concept</mat-label>
             <input name="memo" matInput type="text" placeholder="Ejemplo"
               [(ngModel)]="model.memo" required #memoControl="ngModel">
             <mat-icon matSuffix class="text-gray-600">description</mat-icon>
@@ -67,17 +67,17 @@ export interface TransferFormPayLoad{
             @if(form.submitted && memoControl.errors){
                 <mat-error>
                 @if(memoControl.errors['required']) {
-                  El motivo es obligatorio. 
+                  The reason is mandatory. 
                 }
                 </mat-error> 
             }@else{
-                <mat-hint>Debe ser el motivo de la transferencia</mat-hint>
+                <mat-hint>It must be the reason for the transfer.</mat-hint>
             }
         </mat-form-field>
 
       
         <mat-form-field appearance="fill" class="w-full mb-4">
-            <mat-label>Monto</mat-label>
+            <mat-label>Amount</mat-label>
             <input name="amount" matInput type="number" min="0" placeholder="Ingrese el monto aquí."
               [(ngModel)]="model.amount" required #amountControl="ngModel" [max]="tokenControl.value?.balance ?? undefined">
             <mat-icon matSuffix class="text-gray-600">attach_money</mat-icon>
@@ -85,21 +85,21 @@ export interface TransferFormPayLoad{
             @if(form.submitted && amountControl.errors){
                 <mat-error>
                 @if(amountControl.errors['required']) {
-                  El monto es obligatorio.
+                  The amount is mandatory.
                   } @else if (amountControl.errors['min']) {
-                    El monto debe ser mayor a cero.
+                    The amount must be greater than zero.
                   } @else if (amountControl.errors['max']) {
-                    El monto debe ser menor a {{tokenControl.value.balance }}.
+                    The amount must be less than {{tokenControl.value.balance }}.
                   }
                 </mat-error>
             }@else{
-                <mat-hint>Ingrese el monto a enviar.</mat-hint>
+                <mat-hint>Enter the amount to send.</mat-hint>
             }
         </mat-form-field>
 
 
         <mat-form-field appearance="fill" class="w-full mb-4">
-            <mat-label>Destinatario</mat-label>
+            <mat-label>receiver</mat-label>
             <input name="receiverAddress" matInput type="text" placeholder="Public Key de la wallet del destinatario."
               [(ngModel)]="model.receiverAddress" required #receiverAddressControl="ngModel">
             <mat-icon matSuffix class="text-gray-600">key</mat-icon>
@@ -107,16 +107,16 @@ export interface TransferFormPayLoad{
             @if(form.submitted && receiverAddressControl.errors){
                 <mat-error>
                 @if(receiverAddressControl.errors['required']) {
-                  El monto es obligatorio.
+                  The receiver is mandatory.
                   }
                 </mat-error>
             }@else{
-                <mat-hint>El destinatario es obligatorio</mat-hint>
+                <mat-hint>The receiver is mandatory.</mat-hint>
             }
         </mat-form-field>
 
       <footer class="flex justify-center font-mono">
-        <button type="submit" mat-raised-button color="myGray">Enviar</button>
+        <button type="submit" mat-raised-button color="myGray">Send</button>
       </footer>
     </form>
   </div>
@@ -140,11 +140,11 @@ export interface TransferFormPayLoad{
 
     onSubmitForm(form: NgForm){
       if(form.invalid || this.model.amount === null || this.model.memo=== null || this.model.receiverAddress === null || this.model.token === null){
-        console.error('El formulario es invalido');
+        console.error('The form is invalid');
         Swal.fire({
           icon: 'error',
           title: 'Error',
-          text: 'El formulario es inválido',
+          text: 'The form is invalid',
           timer: 4000, // 4 segundos
           timerProgressBar: true
         });

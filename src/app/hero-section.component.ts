@@ -42,7 +42,7 @@ import { TransferModalComponent } from "./transfer.modal.component";
                     </table>
 
                 <footer class="mt-2">
-                    <button class="px-4 py-2 bg-myGray text-white font-mono rounded hover:bg-gray-300" (click)="onTransfer()">Transferir Fondos</button>
+                    <button class="px-4 py-2 bg-myGray text-white font-mono rounded hover:bg-gray-300" (click)="onTransfer()">Transfer funds</button>
                 </footer>
             </div>
         }

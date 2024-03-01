@@ -13,13 +13,15 @@ import { TransferFormComponent, TransferFormPayLoad } from "./transfer-form.comp
     standalone: true,
     imports: [TransferModalComponent, TransferFormComponent],
     template: `
-    <div class="px-8 pt-20 pb-8" style="background-color:black">
-      <h2 class="text-3xl text-center font-mono text-myGray mb-8">Transferir Fondos</h2>
+   <div class="w-full max-w-2xl sm:max-w-3xl rounded-lg overflow-hidden">
+    <div class="px-8 pt-20 pb-12" style="background-color:black;">
+      <h2 class="text-3xl text-center font-mono text-myGray mb-8">Transfer funds</h2>
 
       <my-proyect-transfer-form 
       (submitForm)="onTransfer($event)"
       [tokens] = "allTokens() ?? []"
       ></my-proyect-transfer-form>
+    </div>
     </div>
     `,
     
@@ -39,8 +41,8 @@ import { TransferFormComponent, TransferFormPayLoad } from "./transfer-form.comp
     onTransfer(payload: TransferFormPayLoad){
 
       Swal.mixin({
-        title: 'Transacción en progreso',
-        text: 'Por favor, espere mientras se completa la transacción...',
+        title: 'Transaction in progress',
+        text: 'Please wait while the transaction is completed...',
         allowOutsideClick: false,
         allowEscapeKey: false,
         showConfirmButton: false,
@@ -61,17 +63,17 @@ import { TransferFormComponent, TransferFormPayLoad } from "./transfer-form.comp
       ).subscribe({
         next: (signature) => {
             Swal.close();
-            Swal.fire('Transacción completada con éxito', '', 'success');
+            Swal.fire('Transaction completed successfully', '', 'success');
             console.log(`Firma: ${signature}`);
         },
 
         
         error: (error) => {
             Swal.close();
-            Swal.fire('Error', 'Hubo un problema al completar la transacción', 'error');
+            Swal.fire('Error', 'There was a problem completing the transaction', 'error');
             console.error(error);
         },
-        complete: () => console.log('Transacción lista.')
+        complete: () => console.log('Transaction ready.')
     })
 
   }
